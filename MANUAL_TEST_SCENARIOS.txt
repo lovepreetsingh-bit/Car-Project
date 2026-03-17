@@ -1,0 +1,1013 @@
+--------------------------------------------------
+Test Scenario ID: TS001
+Title: View all car listings successfully
+Preconditions:
+- Backend server is running
+- Frontend application is accessible
+- At least one car listing exists in the system
+
+Steps:
+1. Open the Car Selling Platform homepage
+2. Observe the list of available cars
+
+Expected Result:
+- Homepage loads without errors
+- All available car listings are displayed
+- Each listing shows key summary information such as title, brand, model, year, and price
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS002
+Title: View empty state when no car listings exist
+Preconditions:
+- Backend server is running
+- Frontend application is accessible
+- No car listings exist in the system
+
+Steps:
+1. Open the Car Selling Platform homepage
+2. Observe the listing section
+
+Expected Result:
+- Homepage loads without errors
+- No broken layout or console-visible failure occurs
+- A clear empty-state message is displayed to the user
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS003
+Title: Verify each car card displays correct summary information
+Preconditions:
+- At least one car listing exists with known data
+
+Steps:
+1. Open the homepage
+2. Locate a known car listing
+3. Compare displayed card details with stored car data
+
+Expected Result:
+- The card displays the correct title
+- The card displays the correct brand and model
+- The card displays the correct year
+- The card displays the correct price
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS004
+Title: Open car details page from car listing
+Preconditions:
+- At least one car listing exists
+
+Steps:
+1. Open the homepage
+2. Click on a listed car
+
+Expected Result:
+- User is navigated to the selected car's details page
+- Details page loads without errors
+- The selected car's information is shown
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS005
+Title: Verify car details page shows complete car information
+Preconditions:
+- A car listing exists with all fields populated
+
+Steps:
+1. Open the homepage
+2. Click the target car listing
+3. Review the details page
+
+Expected Result:
+- The details page shows title
+- The details page shows brand
+- The details page shows model
+- The details page shows year
+- The details page shows price
+- The details page shows mileage
+- The details page shows description
+- The details page shows seller name
+- The details page shows seller contact
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS006
+Title: Verify correct car details are shown for selected listing
+Preconditions:
+- At least two car listings exist with different values
+
+Steps:
+1. Open the homepage
+2. Click the first car listing
+3. Note the details shown
+4. Go back to homepage
+5. Click the second car listing
+6. Compare both detail pages
+
+Expected Result:
+- Each details page shows only the selected car's information
+- No data from another listing is mixed into the page
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS007
+Title: Access car details page using direct valid URL
+Preconditions:
+- A valid car ID exists
+
+Steps:
+1. Open the browser
+2. Enter the direct URL of a known car details page
+3. Press Enter
+
+Expected Result:
+- The details page loads successfully
+- The corresponding car information is displayed
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS008
+Title: Access car details page using invalid car ID
+Preconditions:
+- Frontend and backend are running
+
+Steps:
+1. Open the browser
+2. Enter the car details URL with an invalid or non-existing ID
+3. Press Enter
+
+Expected Result:
+- Application handles the invalid request gracefully
+- A meaningful error message or not-found message is displayed
+- The application does not crash
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS009
+Title: Navigate to Post Car page successfully
+Preconditions:
+- Frontend application is accessible
+
+Steps:
+1. Open the homepage
+2. Click the navigation link or button for posting a car
+
+Expected Result:
+- User is taken to the Post Car page
+- The car posting form is displayed properly
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS010
+Title: Add a new car listing successfully with valid data
+Preconditions:
+- User is on the Post Car page
+
+Steps:
+1. Enter a valid title
+2. Enter a valid brand
+3. Enter a valid model
+4. Enter a valid year
+5. Enter a valid price
+6. Enter a valid mileage
+7. Enter a valid description
+8. Enter a valid seller name
+9. Enter valid seller contact details
+10. Click the Submit button
+
+Expected Result:
+- Car listing is created successfully
+- Success message or confirmation is shown if applicable
+- User is redirected appropriately or remains on page with success state
+- New car appears on the listings page
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS011
+Title: Verify newly created car is visible in all car listings
+Preconditions:
+- A new car listing has been created successfully
+
+Steps:
+1. Navigate to the homepage
+2. Search visually for the newly created car entry
+
+Expected Result:
+- The newly added car appears in the car list
+- The displayed summary information matches the entered data
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS012
+Title: Verify newly created car details match submitted data
+Preconditions:
+- A new car listing has been created successfully
+
+Steps:
+1. Open the homepage
+2. Select the newly created car
+3. Review all details on the car details page
+
+Expected Result:
+- All submitted values are saved and displayed correctly
+- No field values are missing or altered unexpectedly
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS013
+Title: Validate required field error when title is empty
+Preconditions:
+- User is on the Post Car page
+
+Steps:
+1. Leave title blank
+2. Enter valid values in all other fields
+3. Click Submit
+
+Expected Result:
+- Car listing is not created
+- Validation error is shown for title
+- User remains on the form
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS014
+Title: Validate required field error when brand is empty
+Preconditions:
+- User is on the Post Car page
+
+Steps:
+1. Leave brand blank
+2. Fill all other fields with valid values
+3. Click Submit
+
+Expected Result:
+- Car listing is not created
+- Validation error is shown for brand
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS015
+Title: Validate required field error when model is empty
+Preconditions:
+- User is on the Post Car page
+
+Steps:
+1. Leave model blank
+2. Fill all other fields with valid values
+3. Click Submit
+
+Expected Result:
+- Car listing is not created
+- Validation error is shown for model
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS016
+Title: Validate required field error when year is empty
+Preconditions:
+- User is on the Post Car page
+
+Steps:
+1. Leave year blank
+2. Fill all other fields with valid values
+3. Click Submit
+
+Expected Result:
+- Car listing is not created
+- Validation error is shown for year
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS017
+Title: Validate required field error when price is empty
+Preconditions:
+- User is on the Post Car page
+
+Steps:
+1. Leave price blank
+2. Fill all other fields with valid values
+3. Click Submit
+
+Expected Result:
+- Car listing is not created
+- Validation error is shown for price
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS018
+Title: Validate required field error when mileage is empty
+Preconditions:
+- User is on the Post Car page
+
+Steps:
+1. Leave mileage blank
+2. Fill all other fields with valid values
+3. Click Submit
+
+Expected Result:
+- Car listing is not created
+- Validation error is shown for mileage
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS019
+Title: Validate required field error when description is empty
+Preconditions:
+- User is on the Post Car page
+
+Steps:
+1. Leave description blank
+2. Fill all other fields with valid values
+3. Click Submit
+
+Expected Result:
+- Car listing is not created
+- Validation error is shown for description
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS020
+Title: Validate required field error when seller name is empty
+Preconditions:
+- User is on the Post Car page
+
+Steps:
+1. Leave seller name blank
+2. Fill all other fields with valid values
+3. Click Submit
+
+Expected Result:
+- Car listing is not created
+- Validation error is shown for seller name
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS021
+Title: Validate required field error when seller contact is empty
+Preconditions:
+- User is on the Post Car page
+
+Steps:
+1. Leave seller contact blank
+2. Fill all other fields with valid values
+3. Click Submit
+
+Expected Result:
+- Car listing is not created
+- Validation error is shown for seller contact
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS022
+Title: Validate year accepts only valid numeric value
+Preconditions:
+- User is on the Post Car page
+
+Steps:
+1. Enter letters or special characters in the year field
+2. Fill remaining fields with valid values
+3. Click Submit
+
+Expected Result:
+- Car listing is not created
+- Validation error is shown for invalid year
+- Non-numeric year is rejected
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS023
+Title: Validate price accepts only valid numeric value
+Preconditions:
+- User is on the Post Car page
+
+Steps:
+1. Enter alphabetic text in the price field
+2. Fill all other fields with valid values
+3. Click Submit
+
+Expected Result:
+- Car listing is not created
+- Validation error is shown for invalid price
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS024
+Title: Validate mileage accepts only valid numeric value
+Preconditions:
+- User is on the Post Car page
+
+Steps:
+1. Enter alphabetic text in the mileage field
+2. Fill all other fields with valid values
+3. Click Submit
+
+Expected Result:
+- Car listing is not created
+- Validation error is shown for invalid mileage
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS025
+Title: Validate negative year value is rejected
+Preconditions:
+- User is on the Post Car page
+
+Steps:
+1. Enter a negative number in the year field
+2. Fill all other fields with valid values
+3. Click Submit
+
+Expected Result:
+- Car listing is not created
+- Validation error is shown for year
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS026
+Title: Validate negative price value is rejected
+Preconditions:
+- User is on the Post Car page
+
+Steps:
+1. Enter a negative number in the price field
+2. Fill all other fields with valid values
+3. Click Submit
+
+Expected Result:
+- Car listing is not created
+- Validation error is shown for price
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS027
+Title: Validate negative mileage value is rejected
+Preconditions:
+- User is on the Post Car page
+
+Steps:
+1. Enter a negative number in the mileage field
+2. Fill all other fields with valid values
+3. Click Submit
+
+Expected Result:
+- Car listing is not created
+- Validation error is shown for mileage
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS028
+Title: Validate future year beyond realistic range
+Preconditions:
+- User is on the Post Car page
+
+Steps:
+1. Enter a year far in the future such as 3000
+2. Fill all other fields with valid values
+3. Click Submit
+
+Expected Result:
+- Car listing is not created if year rules exist
+- Appropriate validation message is shown for unrealistic year
+- If system accepts it, defect should be logged
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS029
+Title: Validate extremely large price value handling
+Preconditions:
+- User is on the Post Car page
+
+Steps:
+1. Enter a very large price value
+2. Fill all other fields with valid values
+3. Click Submit
+
+Expected Result:
+- System handles the value without crashing
+- Either the value is accepted within business rules or a validation message is shown
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS030
+Title: Validate extremely large mileage value handling
+Preconditions:
+- User is on the Post Car page
+
+Steps:
+1. Enter a very large mileage value
+2. Fill all other fields with valid values
+3. Click Submit
+
+Expected Result:
+- System handles the value without crashing
+- Either the value is accepted within business rules or a validation message is shown
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS031
+Title: Validate text fields with leading and trailing spaces
+Preconditions:
+- User is on the Post Car page
+
+Steps:
+1. Enter title, brand, model, seller name, and description with leading and trailing spaces
+2. Enter valid values in the remaining fields
+3. Click Submit
+4. Open the created listing
+
+Expected Result:
+- Listing is created successfully if spaces are allowed
+- Stored values are trimmed or handled consistently
+- No malformed display appears in UI
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS032
+Title: Validate special characters in text fields
+Preconditions:
+- User is on the Post Car page
+
+Steps:
+1. Enter special characters in title or description such as hyphen, slash, ampersand, and brackets
+2. Fill remaining fields with valid values
+3. Click Submit
+
+Expected Result:
+- Valid special characters are accepted if supported
+- Listing is displayed correctly without layout breakage
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS033
+Title: Validate script injection attempt in text fields
+Preconditions:
+- User is on the Post Car page
+
+Steps:
+1. Enter a script tag or HTML snippet in title or description
+2. Fill remaining fields with valid values
+3. Click Submit
+4. Open the created listing if saved
+
+Expected Result:
+- Script content is escaped or sanitized
+- No script is executed in listing page or details page
+- Application remains secure and stable
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS034
+Title: Delete an unsold car listing successfully
+Preconditions:
+- A car listing exists and is marked as not sold
+- User is on the car details page or listing page where delete is available
+
+Steps:
+1. Open the target unsold car listing
+2. Click Delete
+3. Confirm the delete action if confirmation is shown
+
+Expected Result:
+- Car listing is deleted successfully
+- Success message is shown if applicable
+- Listing no longer appears in the homepage list
+- Direct access to deleted car details no longer works
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS035
+Title: Verify deleted car is removed from details page access
+Preconditions:
+- A car listing has been deleted successfully
+
+Steps:
+1. Open the previously copied direct URL of the deleted car details page
+2. Press Enter
+
+Expected Result:
+- System shows not-found or error message
+- Deleted car data is not displayed
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS036
+Title: Attempt to delete a sold car listing
+Preconditions:
+- A car listing exists and is marked as sold
+
+Steps:
+1. Open the sold car listing
+2. Attempt to use the Delete action
+
+Expected Result:
+- Delete option is hidden or disabled for sold car
+- If delete is attempted through UI or direct request, system blocks the action
+- Appropriate message is shown to user
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS037
+Title: Cancel delete action from confirmation dialog
+Preconditions:
+- An unsold car listing exists
+- Delete action requires confirmation
+
+Steps:
+1. Open the target listing
+2. Click Delete
+3. Click Cancel in the confirmation dialog
+
+Expected Result:
+- Listing is not deleted
+- User stays on the current page
+- Car still appears in listings and details page
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS038
+Title: Verify form retains data after validation failure
+Preconditions:
+- User is on the Post Car page
+
+Steps:
+1. Fill all fields except one required field
+2. Click Submit
+3. Observe all entered values
+
+Expected Result:
+- Validation error is displayed
+- Already entered valid field values remain populated
+- User does not need to re-enter all data
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS039
+Title: Verify submit button behavior on repeated clicks
+Preconditions:
+- User is on the Post Car page with all valid data entered
+
+Steps:
+1. Click Submit multiple times quickly
+
+Expected Result:
+- Only one car listing is created
+- Duplicate submissions are prevented
+- UI shows loading or disables button if designed that way
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS040
+Title: Verify homepage layout on desktop screen
+Preconditions:
+- Frontend application is accessible on a desktop browser
+
+Steps:
+1. Open the homepage on desktop resolution
+2. Observe header, listing cards, spacing, and alignment
+
+Expected Result:
+- Page elements are aligned properly
+- Text is readable
+- Buttons and links are visible and usable
+- No overlap or broken layout is present
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS041
+Title: Verify homepage layout on mobile screen
+Preconditions:
+- Frontend application is accessible
+- Browser responsive mode or mobile device is available
+
+Steps:
+1. Open the homepage in mobile view
+2. Observe listing cards and navigation elements
+
+Expected Result:
+- Layout adapts to smaller screen size
+- Content is readable without horizontal overflow
+- Buttons remain tappable
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS042
+Title: Verify Post Car form layout on mobile screen
+Preconditions:
+- Frontend application is accessible
+
+Steps:
+1. Open the Post Car page in mobile view
+2. Observe field alignment, labels, buttons, and spacing
+
+Expected Result:
+- Form fields are visible and usable
+- Labels align properly with inputs
+- Submit button is accessible without layout issues
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS043
+Title: Verify labels, placeholders, and field names are user friendly
+Preconditions:
+- User is on the Post Car page
+
+Steps:
+1. Review all form labels and placeholders
+2. Compare labels with business fields
+
+Expected Result:
+- Each field has a clear and meaningful label
+- Field purpose is easy to understand
+- No spelling mistakes or ambiguous wording are present
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS044
+Title: Verify error messages are clear and positioned correctly
+Preconditions:
+- User is on the Post Car page
+
+Steps:
+1. Trigger validation errors by submitting an incomplete form
+2. Observe where and how error messages appear
+
+Expected Result:
+- Error messages clearly describe the problem
+- Messages appear near the relevant field or in a clear summary area
+- UI remains readable and aligned
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS045
+Title: Verify browser refresh behavior on homepage
+Preconditions:
+- Homepage is loaded successfully
+
+Steps:
+1. Refresh the homepage using browser refresh
+2. Wait for the page to reload
+
+Expected Result:
+- Homepage reloads without application crash
+- Car listings are fetched and displayed again
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS046
+Title: Verify browser refresh behavior on car details page
+Preconditions:
+- A valid car details page is open
+
+Steps:
+1. Refresh the car details page
+2. Wait for the page to reload
+
+Expected Result:
+- Details page reloads successfully
+- Same car information remains visible
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS047
+Title: Verify handling when backend is unavailable on homepage
+Preconditions:
+- Frontend is running
+- Backend service is stopped or unreachable
+
+Steps:
+1. Open the homepage
+2. Observe system behavior while data fetch fails
+
+Expected Result:
+- Application does not crash
+- A user-friendly error message or fallback state is displayed
+- Broken or misleading data is not shown
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS048
+Title: Verify handling when backend is unavailable during car creation
+Preconditions:
+- User is on the Post Car page
+- Backend service is stopped or unreachable
+
+Steps:
+1. Enter valid values in all fields
+2. Click Submit
+
+Expected Result:
+- Listing is not created
+- A proper error message is displayed
+- Application remains responsive
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS049
+Title: Verify delete failure handling when backend returns an error
+Preconditions:
+- An unsold car listing exists
+- Backend is configured to return an error for delete or is temporarily unavailable
+
+Steps:
+1. Open the target listing
+2. Click Delete
+3. Confirm the action if prompted
+
+Expected Result:
+- Car listing is not removed from UI permanently unless delete succeeds
+- User sees an appropriate failure message
+- Application does not crash
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS050
+Title: Verify long description handling in UI
+Preconditions:
+- User is on the Post Car page
+
+Steps:
+1. Enter a very long description within allowed input limits
+2. Fill all remaining fields with valid values
+3. Submit the form
+4. Open homepage and details page
+
+Expected Result:
+- Listing is created successfully if length is allowed
+- Homepage card layout remains intact
+- Details page displays long text correctly without overlap or truncation issues beyond design rules
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS051
+Title: Verify duplicate car listings can be handled consistently
+Preconditions:
+- User is on the Post Car page
+
+Steps:
+1. Create a valid car listing
+2. Create another listing with the same values
+3. Open homepage
+
+Expected Result:
+- System handles duplicate entries according to business rules
+- If duplicates are allowed, both appear correctly
+- If duplicates are not allowed, validation prevents second creation with clear message
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS052
+Title: Verify numeric fields handle decimal input appropriately
+Preconditions:
+- User is on the Post Car page
+
+Steps:
+1. Enter decimal value in year field
+2. Enter decimal value in price field
+3. Enter decimal value in mileage field
+4. Fill other fields with valid values
+5. Click Submit
+
+Expected Result:
+- Year rejects decimal value
+- Price and mileage behave according to business rules
+- Any invalid decimal entry shows clear validation
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS053
+Title: Verify delete action visibility only for eligible listings
+Preconditions:
+- At least one sold listing and one unsold listing exist
+
+Steps:
+1. Open the unsold car listing
+2. Observe delete action
+3. Open the sold car listing
+4. Observe delete action
+
+Expected Result:
+- Delete action is available for unsold listing
+- Delete action is hidden or disabled for sold listing
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS054
+Title: Verify tab order and keyboard navigation on Post Car form
+Preconditions:
+- User is on the Post Car page
+
+Steps:
+1. Use Tab key to move through all form elements
+2. Use keyboard only to reach Submit
+3. Press Enter or Space on actionable controls where applicable
+
+Expected Result:
+- Focus moves in a logical order
+- All interactive fields are reachable by keyboard
+- Form can be submitted using keyboard interaction
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS055
+Title: Verify user can navigate back from details page to listings page
+Preconditions:
+- A car details page is open
+
+Steps:
+1. Use provided Back navigation or browser back button
+2. Observe navigation result
+
+Expected Result:
+- User returns to the listings page successfully
+- Previous page loads correctly without errors
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS056
+Title: Verify UI does not break with long seller name or contact value
+Preconditions:
+- User is on the Post Car page
+
+Steps:
+1. Enter an unusually long seller name
+2. Enter an unusually long seller contact value
+3. Fill all other fields with valid data
+4. Submit the form
+5. Open the created listing
+
+Expected Result:
+- System handles long values without crashing
+- Text wraps or truncates according to design
+- Layout remains intact on listing and details pages
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS057
+Title: Verify page behavior when user opens multiple car details in sequence
+Preconditions:
+- At least three car listings exist
+
+Steps:
+1. Open details page of first car
+2. Return to homepage
+3. Open details page of second car
+4. Return to homepage
+5. Open details page of third car
+
+Expected Result:
+- Each page loads correctly
+- No stale data from previous selection remains visible
+- Navigation remains stable throughout
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS058
+Title: Verify server-side validation for missing required fields through direct request behavior
+Preconditions:
+- Frontend and backend are running
+- User can manipulate request indirectly through UI or API test setup exists
+
+Steps:
+1. Attempt to submit a car with one or more required fields missing
+2. Observe response and UI behavior
+
+Expected Result:
+- Backend rejects invalid payload
+- Frontend shows appropriate error feedback
+- Invalid listing is not created in the database
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS059
+Title: Verify data persistence after successful creation and page reload
+Preconditions:
+- A new car listing has been created successfully
+
+Steps:
+1. Open homepage and confirm listing is visible
+2. Refresh the page
+3. Open the car details page
+4. Refresh the details page
+
+Expected Result:
+- Car remains available after page reload
+- Saved data persists correctly
+--------------------------------------------------
+
+--------------------------------------------------
+Test Scenario ID: TS060
+Title: Verify deleted listing does not reappear after page reload
+Preconditions:
+- An unsold listing has been deleted successfully
+
+Steps:
+1. Refresh the homepage
+2. Search for the deleted listing
+3. Refresh any bookmarked details URL for the same car
+
+Expected Result:
+- Deleted listing does not reappear on homepage
+- Deleted listing details cannot be accessed
+--------------------------------------------------
