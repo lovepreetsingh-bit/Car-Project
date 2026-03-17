@@ -38,6 +38,20 @@ jobs:
       - name: Install Playwright browsers
         run: python -m playwright install --with-deps chromium
 
+      - name: Validate test environment URLs
+        run: |
+          if [ -z "${BASE_URL}" ]; then
+            echo "BASE_URL is not set. Configure TEST_BASE_URL in GitHub repository or environment variables."
+            exit 1
+          fi
+          if [ -z "${API_URL}" ]; then
+            echo "API_URL is not set. Configure TEST_API_URL in GitHub repository or environment variables."
+            exit 1
+          fi
+          echo "Running UI tests against:"
+          echo "BASE_URL=${BASE_URL}"
+          echo "API_URL=${API_URL}"
+
       - name: Create reports directory
         run: mkdir -p reports
 

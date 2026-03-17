@@ -11,8 +11,27 @@ from utils.api_client import CarApiClient
 from utils.test_data import build_car_payload
 
 
-BASE_URL = os.getenv("BASE_URL", "http://localhost:3000").rstrip("/")
-API_URL = os.getenv("API_URL", "http://localhost:5000/api/").rstrip("/") + "/"
+def _env_or_default(name: str, default: str) -> str:
+    value = os.getenv(name)
+    if value is None or not value.strip():
+        return default
+    return value.strip()
+
+
+BASE_URL = _env_or_default("BASE_URL", "http://localhost:3000").rstrip("/")
+API_URL = _env_or_default("API_URL", "http://localhost:5000/api").rstrip("/") + "/"
+
+
+def _validate_http_url(name: str, value: str) -> None:
+    if not value.startswith(("http://", "https://")):
+        raise pytest.UsageError(
+            f"{name} must be a valid absolute URL. Received: {value!r}. "
+            f"Set the {name} environment variable correctly in GitHub Actions or your local shell."
+        )
+
+
+_validate_http_url("BASE_URL", BASE_URL)
+_validate_http_url("API_URL", API_URL)
 
 
 @pytest.fixture(scope="session")
