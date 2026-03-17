@@ -1,3 +1,4 @@
+import os
 from collections.abc import Callable
 
 import pytest
@@ -10,8 +11,8 @@ from utils.api_client import CarApiClient
 from utils.test_data import build_car_payload
 
 
-BASE_URL = "http://localhost:3000"
-API_URL = "http://localhost:5000/api/"
+BASE_URL = os.getenv("BASE_URL", "http://localhost:3000").rstrip("/")
+API_URL = os.getenv("API_URL", "http://localhost:5000/api/").rstrip("/") + "/"
 
 
 @pytest.fixture(scope="session")
