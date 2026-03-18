@@ -62,18 +62,26 @@ exports.getCarById = async (req, res) => {
 
 // @desc    Create new car listing
 // @route   POST /api/cars
-// @access  Public
+// @access  Private
 exports.createCar = async (req, res) => {
   try {
-    const { title, brand, model, year, price, mileage, description, seller, images } = req.body;
+    const { title, brand, model, year, price, mileage, description, images } = req.body;
 
     // Validate required fields
-    if (!title || !brand || !model || !year || !price || !mileage || !description || !seller) {
+    if (!title || !brand || !model || !year || !price || !mileage || !description) {
       return res.status(400).json({
         success: false,
         message: 'Please provide all required fields',
       });
     }
+
+    const seller = {
+      userId: req.user._id,
+      name: req.user.name,
+      email: req.user.email,
+      phone: req.user.phone,
+      city: req.body?.seller?.city || '',
+    };
 
     // Create car listing
     const car = await Car.create({
@@ -86,6 +94,7 @@ exports.createCar = async (req, res) => {
       description,
       seller,
       images: images || [],
+      postedBy: req.user._id,
     });
 
     res.status(201).json({
@@ -103,7 +112,7 @@ exports.createCar = async (req, res) => {
 
 // @desc    Update car listing
 // @route   PUT /api/cars/:id
-// @access  Public (should be protected in production)
+// @access  Private
 exports.updateCar = async (req, res) => {
   try {
     let car = await Car.findById(req.params.id);
@@ -112,6 +121,13 @@ exports.updateCar = async (req, res) => {
       return res.status(404).json({
         success: false,
         message: 'Car not found',
+      });
+    }
+
+    if (!car.postedBy || String(car.postedBy) !== String(req.user._id)) {
+      return res.status(403).json({
+        success: false,
+        message: 'You can only update your own listings.',
       });
     }
 
@@ -143,7 +159,7 @@ exports.updateCar = async (req, res) => {
 
 // @desc    Delete car listing
 // @route   DELETE /api/cars/:id
-// @access  Public (should be protected in production)
+// @access  Private
 exports.deleteCar = async (req, res) => {
   try {
     const car = await Car.findById(req.params.id);
@@ -152,6 +168,13 @@ exports.deleteCar = async (req, res) => {
       return res.status(404).json({
         success: false,
         message: 'Car not found',
+      });
+    }
+
+    if (!car.postedBy || String(car.postedBy) !== String(req.user._id)) {
+      return res.status(403).json({
+        success: false,
+        message: 'You can only delete your own listings.',
       });
     }
 
@@ -179,21 +202,28 @@ exports.deleteCar = async (req, res) => {
 
 // @desc    Mark car as sold
 // @route   PATCH /api/cars/:id/sold
-// @access  Public
+// @access  Private
 exports.markCarAsSold = async (req, res) => {
   try {
-    const car = await Car.findByIdAndUpdate(
-      req.params.id,
-      { isSold: true },
-      { new: true, runValidators: true }
-    );
-
-    if (!car) {
+    const existingCar = await Car.findById(req.params.id);
+    if (!existingCar) {
       return res.status(404).json({
         success: false,
         message: 'Car not found',
       });
     }
+
+    if (!existingCar.postedBy || String(existingCar.postedBy) !== String(req.user._id)) {
+      return res.status(403).json({
+        success: false,
+        message: 'You can only mark your own listing as sold.',
+      });
+    }
+
+    const car = await Car.findByIdAndUpdate(req.params.id, { isSold: true }, { new: true, runValidators: true });
+
+    const io = req.app.get('io');
+    io.emit('car:sold', { carId: car._id });
 
     res.status(200).json({
       success: true,

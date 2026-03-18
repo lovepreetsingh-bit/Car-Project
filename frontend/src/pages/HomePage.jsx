@@ -3,8 +3,10 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import CarCard from '../components/CarCard';
 import { carAPI } from '../services/api';
+import { useAuth } from '../context/AuthContext';
 
 const HomePage = () => {
+  const { user, isAuthenticated, logout } = useAuth();
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -50,9 +52,39 @@ const HomePage = () => {
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <header className="bg-blue-600 text-white py-6 px-4">
-        <div className="max-w-6xl mx-auto">
-          <h1 className="text-4xl font-bold mb-2">Car Selling Platform</h1>
-          <p className="text-blue-100">Find your perfect car or list yours for sale</p>
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div>
+            <h1 className="text-4xl font-bold mb-2">Car Selling Platform</h1>
+            <p className="text-blue-100">Find your perfect car or list yours for sale</p>
+          </div>
+          <div className="flex items-center gap-3">
+            {isAuthenticated ? (
+              <>
+                <span className="text-sm text-blue-100">Hi, {user?.name}</span>
+                <button
+                  onClick={logout}
+                  className="bg-white text-blue-700 px-4 py-2 rounded hover:bg-blue-50 transition"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="bg-white text-blue-700 px-4 py-2 rounded hover:bg-blue-50 transition"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/register"
+                  className="bg-blue-800 text-white px-4 py-2 rounded hover:bg-blue-900 transition"
+                >
+                  Register
+                </Link>
+              </>
+            )}
+          </div>
         </div>
       </header>
 
@@ -61,12 +93,14 @@ const HomePage = () => {
         {/* Add New Listing Button */}
         <div className="mb-8 flex justify-between items-center">
           <h2 className="text-2xl font-bold text-gray-800">Available Cars</h2>
-          <Link
-            to="/add-car"
-            className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition"
-          >
-            + Add New Car
-          </Link>
+          {isAuthenticated && (
+            <Link
+              to="/add-car"
+              className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition"
+            >
+              + Add New Car
+            </Link>
+          )}
         </div>
 
         {/* Filters */}

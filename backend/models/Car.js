@@ -44,6 +44,10 @@ const carSchema = new mongoose.Schema(
       default: [],
     },
     seller: {
+      userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+      },
       name: {
         type: String,
         required: [true, 'Seller name is required'],
@@ -68,6 +72,10 @@ const carSchema = new mongoose.Schema(
     isSold: {
       type: Boolean,
       default: false,
+    },
+    postedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
     },
   },
   { timestamps: true } // Automatically adds createdAt and updatedAt fields

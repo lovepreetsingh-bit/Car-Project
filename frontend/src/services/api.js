@@ -6,6 +6,14 @@ const API = axios.create({
   baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5000/api',
 });
 
+API.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
 // Car API endpoints
 export const carAPI = {
   // Get all cars
@@ -28,6 +36,20 @@ export const carAPI = {
 
   // Get cars with filters
   getFilteredCars: (filters) => API.get('/cars', { params: filters }),
+};
+
+export const authAPI = {
+  register: (payload) => API.post('/auth/register', payload),
+  login: (payload) => API.post('/auth/login', payload),
+  logout: () => API.post('/auth/logout'),
+  getMe: () => API.get('/auth/me'),
+};
+
+export const chatAPI = {
+  startChat: (carId) => API.post('/chats/start', { carId }),
+  getMyChats: () => API.get('/chats'),
+  getChatMessages: (chatId) => API.get(`/chats/${chatId}/messages`),
+  sendMessage: (chatId, content) => API.post(`/chats/${chatId}/messages`, { content }),
 };
 
 export default API;
