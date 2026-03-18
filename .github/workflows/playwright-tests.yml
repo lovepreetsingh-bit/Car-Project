@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   playwright-tests:
-    if: github.event_name == 'push' || (github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'test')
+    if: ${{ (github.event_name == 'push' || (github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'test')) && vars.ENABLE_E2E_TESTS == 'true' }}
     runs-on: ubuntu-latest
     environment: test
     env:
