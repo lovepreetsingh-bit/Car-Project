@@ -1,0 +1,112 @@
+stages:
+  - install
+  - build
+  - deploy
+  - test
+
+variables:
+  DEPLOY_BRANCH: "main"
+  DEPLOY_PATH: "/var/www/car-platform"
+  PM2_APP_NAME: "car-backend"
+  PYTHONUNBUFFERED: "1"
+  ENABLE_E2E_TESTS: "true"
+
+workflow:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push"'
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_PIPELINE_SOURCE == "web"'
+
+install:
+  stage: install
+  image: node:20-bullseye
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $DEPLOY_BRANCH'
+  script:
+    - node -v
+    - npm -v
+    - cd backend && (npm ci || npm install)
+    - cd ../frontend && (npm ci || npm install)
+
+build:
+  stage: build
+  image: node:20-bullseye
+  needs: ["install"]
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $DEPLOY_BRANCH'
+  script:
+    - cd frontend
+    - (npm ci || npm install)
+    - npm run build
+  artifacts:
+    paths:
+      - frontend/build/
+    expire_in: 7 days
+
+deploy:
+  stage: deploy
+  image: alpine:3.20
+  needs: ["build"]
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $DEPLOY_BRANCH'
+  before_script:
+    - apk add --no-cache openssh-client bash curl git
+    - mkdir -p ~/.ssh
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - ssh-keyscan -H "$EC2_HOST" >> ~/.ssh/known_hosts
+  script:
+    - |
+      ssh "$EC2_USER@$EC2_HOST" << EOF
+      set -e
+      cd "$DEPLOY_PATH"
+
+      echo "[DEPLOY] Pull latest code"
+      git fetch origin
+      git checkout "$DEPLOY_BRANCH"
+      git pull --ff-only origin "$DEPLOY_BRANCH"
+
+      echo "[DEPLOY] Install backend dependencies"
+      cd "$DEPLOY_PATH/backend"
+      npm ci || npm install
+
+      echo "[DEPLOY] Restart backend with PM2"
+      pm2 restart "$PM2_APP_NAME" --update-env || pm2 start server.js --name "$PM2_APP_NAME" --cwd "$DEPLOY_PATH/backend"
+      pm2 save
+
+      echo "[DEPLOY] Build frontend"
+      cd "$DEPLOY_PATH/frontend"
+      npm ci || npm install
+      npm run build
+
+      echo "[DEPLOY] Reload nginx"
+      sudo -n systemctl reload nginx || sudo systemctl reload nginx || true
+
+      echo "[DEPLOY] Backend health check on EC2"
+      curl -fsS http://127.0.0.1:5000/api/health
+      EOF
+
+test_playwright:
+  stage: test
+  image: mcr.microsoft.com/playwright/python:v1.58.0-jammy
+  needs: ["deploy"]
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $DEPLOY_BRANCH && $ENABLE_E2E_TESTS == "true"'
+  script:
+    - test -n "$BASE_URL" || (echo "BASE_URL is not set" && exit 1)
+    - test -n "$API_URL" || (echo "API_URL is not set" && exit 1)
+    - echo "BASE_URL=$BASE_URL"
+    - echo "API_URL=$API_URL"
+    - curl -fsS "$API_URL/health"
+    - python -m pip install --upgrade pip
+    - pip install -r requirements.txt
+    - python -m playwright install --with-deps chromium
+    - mkdir -p reports
+    - pytest tests/ui -v --junitxml=reports/junit.xml --html=reports/pytest-report.html --self-contained-html
+  artifacts:
+    when: always
+    paths:
+      - reports/
+    reports:
+      junit: reports/junit.xml
+    expire_in: 14 days
